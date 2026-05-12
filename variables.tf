@@ -8,3 +8,13 @@ variable "host_port" {
  type = number
  default = 8080
 }
+variable "redis_name" {
+    description = "Nom du projet"
+    type = string
+    default = "redis:alpine"
+}
+variable "nginx_name" {
+ description = "Nom du projet"
+ type = string
+ default = "nginx:alpine"
+}

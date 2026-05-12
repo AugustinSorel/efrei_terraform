@@ -1,5 +1,5 @@
 resource "docker_image" "nginx" {
- name = "nginx:alpine"
+ name = "${var.nginx_name}"
 }
 resource "docker_network" "app" {
  name = "app-network"
@@ -13,5 +13,24 @@ resource "docker_container" "web" {
  }
  networks_advanced {
  name = docker_network.app.name
+ }
+ log_opts = {
+   "max-file" = "5"
+   "max-size"  = "20m"
+ }
+ }
+
+ resource "docker_image" "redis" {
+ name = "${var.redis_name}"
+}
+resource "docker_container" "redis" {
+ name = "${var.project_name}-redis"
+ image = docker_image.redis.image_id
+ networks_advanced {
+ name = docker_network.app.name
+ }
+ log_opts = {
+   "max-file" = "5"
+   "max-size"  = "20m"
  }
  }
